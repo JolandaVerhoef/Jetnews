@@ -3,9 +3,14 @@ package com.jolandaverhoef.jetnews
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.ui.core.Text
 import androidx.ui.core.setContent
 import androidx.ui.graphics.Color
-import androidx.ui.layout.*
+import androidx.ui.layout.Column
+import androidx.ui.layout.LayoutHeight
+import androidx.ui.layout.LayoutWidth
+import androidx.ui.layout.Row
+import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.surface.Surface
 import androidx.ui.tooling.preview.Preview
@@ -21,24 +26,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                Greeting("Android")
+                MyApp()
             }
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Column(modifier = LayoutWidth.Fill) {
-        Surface(color = BLUE, modifier = LayoutWidth.Fill + LayoutHeight.Min(54.dp)) {}
-        Surface(color = PINK, modifier = LayoutWidth.Fill + LayoutFlexible(1f)) {}
-    }
+fun MyApp() {
+    TopAppBar()
+    ContentSection()
+}
+
+@Composable
+fun TopAppBar() {
+    Text("I'm a Top App Bar")
+}
+
+@Composable
+fun ContentSection() {
+    Title()
+    PostCardTop()
+    PostCardSimple()
+    PostCardSimple()
+    PostCardSimple()
+}
+
+@Composable
+fun Title() {
+    Text("I'm a Title")
+}
+
+@Composable
+fun PostCardTop() {
+    Text("I'm a Post Card Top")
+}
+
+@Composable
+fun PostCardSimple() {
+    Text("I'm a Post Card Simple")
 }
 
 @Preview
 @Composable
 fun DefaultPreview() {
     MaterialTheme {
-        Greeting("Android")
+        MyApp()
     }
 }
