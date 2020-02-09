@@ -7,14 +7,8 @@ import androidx.ui.core.Text
 import androidx.ui.core.setContent
 import androidx.ui.graphics.Color
 import androidx.ui.layout.Column
-import androidx.ui.layout.LayoutHeight
-import androidx.ui.layout.LayoutWidth
-import androidx.ui.layout.Row
-import androidx.ui.material.Divider
 import androidx.ui.material.MaterialTheme
-import androidx.ui.material.surface.Surface
 import androidx.ui.tooling.preview.Preview
-import androidx.ui.unit.dp
 
 val BLUE = Color(0xff7189bf)
 val PINK = Color(0xffdf7599)
@@ -34,8 +28,10 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MyApp() {
-    TopAppBar()
-    ContentSection()
+    Column {
+        TopAppBar()
+        ContentSection()
+    }
 }
 
 @Composable
@@ -45,11 +41,13 @@ fun TopAppBar() {
 
 @Composable
 fun ContentSection() {
-    Title()
-    PostCardTop()
-    PostCardSimple()
-    PostCardSimple()
-    PostCardSimple()
+    Column {
+        Title()
+        PostCardTop()
+        PostCardSimple()
+        PostCardSimple()
+        PostCardSimple()
+    }
 }
 
 @Composable
