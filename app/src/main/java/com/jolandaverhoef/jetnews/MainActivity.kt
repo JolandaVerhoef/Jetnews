@@ -3,20 +3,20 @@ package com.jolandaverhoef.jetnews
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.ui.core.Clip
 import androidx.ui.core.Text
 import androidx.ui.core.setContent
 import androidx.ui.foundation.DrawImage
+import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
-import androidx.ui.layout.Column
-import androidx.ui.layout.Container
-import androidx.ui.layout.LayoutPadding
+import androidx.ui.layout.*
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Typography
 import androidx.ui.res.imageResource
 import androidx.ui.text.TextStyle
-import androidx.ui.text.font.Font
-import androidx.ui.text.font.FontFamily
 import androidx.ui.text.font.FontWeight
+import androidx.ui.text.font.ResourceFont
+import androidx.ui.text.font.fontFamily
 import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
@@ -26,17 +26,17 @@ val PINK = Color(0xffdf7599)
 val YELLOW = Color(0xffffc785)
 val GREEN = Color(0xff72d6c9)
 
-val appFontFamily = FontFamily(
+val appFontFamily = fontFamily(
     fonts = listOf(
-        Font("montserrat_regular.ttf"),
-        Font("montserrat_medium.ttf", FontWeight.W500),
-        Font("montserrat_semibold.ttf", FontWeight.W600)
+        ResourceFont(R.font.montserrat_regular),
+        ResourceFont(R.font.montserrat_medium, FontWeight.W500),
+        ResourceFont(R.font.montserrat_semibold, FontWeight.W600)
     )
 )
-val bodyFontFamily = FontFamily(
+val bodyFontFamily = fontFamily(
     fonts = listOf(
-        Font("domine_regular.ttf"),
-        Font("domine_bold.ttf", FontWeight.Bold)
+        ResourceFont(R.font.domine_regular),
+        ResourceFont(R.font.domine_bold, FontWeight.Bold)
     )
 )
 val themeTypography = Typography(
@@ -95,10 +95,11 @@ fun Title() {
 fun PostCardTop() {
     Column(modifier = LayoutPadding(16.dp)) {
         Container(height = 180.dp, expanded = true) {
-            DrawImage(
-                image = imageResource(R.drawable.post_4)
-            )
+            Clip(RoundedCornerShape(4.dp)) {
+                DrawImage(imageResource(R.drawable.post_4))
+            }
         }
+        Spacer(LayoutHeight(16.dp))
         Text(
             text = "Locale changes and the AndroidViewModel antipattern",
             style = MaterialTheme.typography().h6
