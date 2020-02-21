@@ -9,10 +9,12 @@ import androidx.ui.core.setContent
 import androidx.ui.foundation.DrawImage
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
+import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
 import androidx.ui.material.MaterialTheme
 import androidx.ui.material.Typography
 import androidx.ui.res.imageResource
+import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
 import androidx.ui.text.font.FontWeight
 import androidx.ui.text.font.ResourceFont
@@ -33,12 +35,6 @@ val appFontFamily = fontFamily(
         ResourceFont(R.font.montserrat_semibold, FontWeight.W600)
     )
 )
-val bodyFontFamily = fontFamily(
-    fonts = listOf(
-        ResourceFont(R.font.domine_regular),
-        ResourceFont(R.font.domine_bold, FontWeight.Bold)
-    )
-)
 val themeTypography = Typography(
     h6 = TextStyle(
         fontFamily = appFontFamily,
@@ -48,6 +44,18 @@ val themeTypography = Typography(
     body2 = TextStyle(
         fontFamily = appFontFamily,
         fontSize = 14.sp
+    ),
+    subtitle1 = TextStyle(
+        fontFamily = appFontFamily,
+        fontWeight = FontWeight.W600,
+        fontSize = 16.sp
+    )
+)
+
+val bodyFontFamily = fontFamily(
+    fonts = listOf(
+        ResourceFont(R.font.domine_regular),
+        ResourceFont(R.font.domine_bold, FontWeight.Bold)
     )
 )
 
@@ -117,13 +125,33 @@ fun PostCardTop() {
 
 @Composable
 fun PostCardSimple() {
-    Text("I'm a Post Card Simple")
+    Row(modifier = LayoutPadding(16.dp)) {
+        Container(
+            width = 40.dp, height = 40.dp,
+            modifier = LayoutPadding(right = 16.dp)
+        ) {
+            DrawImage(imageResource(R.drawable.post_1_thumb))
+        }
+        Column(modifier = LayoutFlexible(1f)) {
+            Text(
+                text = "A Little Thing about Android Module Paths",
+                style = MaterialTheme.typography().subtitle1
+            )
+            Text(
+                text = "Pietro Maggi - 1 min read",
+                style = MaterialTheme.typography().body2
+            )
+        }
+        Container(width=48.dp, height = 48.dp) {
+            DrawVector(vectorResource(R.drawable.ic_bookmark))
+        }
+    }
 }
 
 @Preview("Post Card Top")
 @Composable
 fun DefaultPreview() {
     MaterialTheme(typography = themeTypography) {
-        PostCardTop()
+        PostCardSimple()
     }
 }
