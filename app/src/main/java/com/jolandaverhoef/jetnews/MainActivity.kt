@@ -6,6 +6,7 @@ import androidx.compose.Composable
 import androidx.ui.core.Clip
 import androidx.ui.core.Text
 import androidx.ui.core.setContent
+import androidx.ui.foundation.AdapterList
 import androidx.ui.foundation.DrawImage
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity() {
 fun MyApp() {
     Column {
         TopAppBar()
-        ContentSection()
+        ContentSection(listOf(post1, post2, post3))
     }
 }
 
@@ -83,20 +84,29 @@ fun TopAppBar() {
     Text("I'm a Top App Bar")
 }
 
+object Header
+
 @Composable
-fun ContentSection() {
-    Column {
-        Title()
-        PostCardTop()
-        PostCardSimple()
-        PostCardSimple()
-        PostCardSimple()
+fun ContentSection(posts: List<Post>) {
+    val data = listOf(Header) + posts
+    AdapterList(data) {
+        when(it) {
+            is Header -> {
+                Title()
+                PostCardTop()
+            }
+            is Post -> PostCardSimple(it)
+        }
     }
 }
 
 @Composable
 fun Title() {
-    Text("Top stories for you")
+    Text(
+        text = "Top stories for you",
+        style = MaterialTheme.typography().subtitle1,
+        modifier = LayoutPadding(left = 16.dp, right = 16.dp, top = 16.dp)
+    )
 }
 
 @Composable
@@ -123,35 +133,67 @@ fun PostCardTop() {
     }
 }
 
+data class Post(
+    val image: Int,
+    val title: String,
+    val subtitle: String
+)
+
+val post1 = Post(
+    image = R.drawable.post_1_thumb,
+    title = "A Little Thing about Android Module Paths",
+    subtitle = "Pietro Maggi - 1 min read"
+)
+
+val post2 = Post(
+    image = R.drawable.post_2_thumb,
+    title = "Dagger in Kotlin: Gotchas and optimizations",
+    subtitle = "Manuel Vivo - 3 min read"
+)
+
+val post3 = Post(
+    image = R.drawable.post_3_thumb,
+    title = "From Java Programming Language to Kotlin — the idiomatic way",
+    subtitle = "Florina Muntenescu - 1 min read"
+)
+
 @Composable
-fun PostCardSimple() {
+fun PostCardSimple(post: Post) {
     Row(modifier = LayoutPadding(16.dp)) {
         Container(
             width = 40.dp, height = 40.dp,
             modifier = LayoutPadding(right = 16.dp)
         ) {
-            DrawImage(imageResource(R.drawable.post_1_thumb))
+            DrawImage(imageResource(post.image))
         }
         Column(modifier = LayoutFlexible(1f)) {
             Text(
-                text = "A Little Thing about Android Module Paths",
+                text = post.title,
                 style = MaterialTheme.typography().subtitle1
             )
             Text(
-                text = "Pietro Maggi - 1 min read",
+                text = post.subtitle,
                 style = MaterialTheme.typography().body2
             )
         }
-        Container(width=48.dp, height = 48.dp) {
+        Container(width = 48.dp, height = 48.dp) {
             DrawVector(vectorResource(R.drawable.ic_bookmark))
         }
     }
 }
 
-@Preview("Post Card Top")
+//@Preview("Post Card Simple")
+//@Composable
+//fun DefaultPreview() {
+//    MaterialTheme(typography = themeTypography) {
+//        PostCardSimple(post1)
+//    }
+//}
+
+@Preview("Content Section")
 @Composable
-fun DefaultPreview() {
+fun ContentPreview() {
     MaterialTheme(typography = themeTypography) {
-        PostCardSimple()
+        ContentSection(listOf(post1, post2, post3))
     }
 }
