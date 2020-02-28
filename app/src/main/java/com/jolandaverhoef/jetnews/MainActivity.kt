@@ -13,6 +13,8 @@ import androidx.ui.graphics.Color
 import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
 import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Scaffold
+import androidx.ui.material.TopAppBar
 import androidx.ui.material.Typography
 import androidx.ui.res.imageResource
 import androidx.ui.res.vectorResource
@@ -73,15 +75,17 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MyApp() {
-    Column {
-        TopAppBar()
+    Scaffold(
+        topAppBar = {
+            TopAppBar(
+                title = { Text("Jetnews")},
+                navigationIcon = {
+                    DrawVector(vectorResource(R.drawable.ic_jetnews_logo))
+                })
+        }
+    ) {
         ContentSection(listOf(post1, post2, post3))
     }
-}
-
-@Composable
-fun TopAppBar() {
-    Text("I'm a Top App Bar")
 }
 
 object Header
