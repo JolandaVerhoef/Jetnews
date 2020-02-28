@@ -3,6 +3,8 @@ package com.jolandaverhoef.jetnews
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.Composable
+import androidx.compose.Model
+import androidx.compose.frames.ModelList
 import androidx.ui.core.Clip
 import androidx.ui.core.Text
 import androidx.ui.core.setContent
@@ -23,10 +25,14 @@ import androidx.ui.tooling.preview.Preview
 import androidx.ui.unit.dp
 import androidx.ui.unit.sp
 
-val BLUE = Color(0xff7189bf)
-val PINK = Color(0xffdf7599)
-val YELLOW = Color(0xffffc785)
-val GREEN = Color(0xff72d6c9)
+@Model
+object AppState {
+    val bookmarks = ModelList<String>()
+
+    init {
+        bookmarks.add("2")
+    }
+}
 
 val appFontFamily = fontFamily(
     fonts = listOf(
@@ -149,24 +155,28 @@ fun PostCardTop() {
 }
 
 data class Post(
+    val id: String,
     val image: Int,
     val title: String,
     val subtitle: String
 )
 
 val post1 = Post(
+    id = "1",
     image = R.drawable.post_1_thumb,
     title = "A Little Thing about Android Module Paths",
     subtitle = "Pietro Maggi - 1 min read"
 )
 
 val post2 = Post(
+    id = "2",
     image = R.drawable.post_2_thumb,
     title = "Dagger in Kotlin: Gotchas and optimizations",
     subtitle = "Manuel Vivo - 3 min read"
 )
 
 val post3 = Post(
+    id = "3",
     image = R.drawable.post_3_thumb,
     title = "From Java Programming Language to Kotlin — the idiomatic way",
     subtitle = "Florina Muntenescu - 1 min read"
@@ -192,7 +202,9 @@ fun PostCardSimple(post: Post) {
             )
         }
         Container(width = 48.dp, height = 48.dp) {
-            DrawVector(vectorResource(R.drawable.ic_bookmark))
+            DrawVector(vectorResource(
+                if(AppState.bookmarks.contains(post.id)) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
+            ))
         }
     }
 }
