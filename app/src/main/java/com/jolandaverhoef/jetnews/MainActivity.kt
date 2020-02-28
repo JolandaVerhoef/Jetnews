@@ -12,10 +12,7 @@ import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
 import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
-import androidx.ui.material.MaterialTheme
-import androidx.ui.material.Scaffold
-import androidx.ui.material.TopAppBar
-import androidx.ui.material.Typography
+import androidx.ui.material.*
 import androidx.ui.res.imageResource
 import androidx.ui.res.vectorResource
 import androidx.ui.text.TextStyle
@@ -55,6 +52,20 @@ val themeTypography = Typography(
     )
 )
 
+val themeColors = lightColorPalette(
+    primary = Color(0xFFDD0D3C),
+    primaryVariant = Color(0xFFC20029),
+    onPrimary = Color.White,
+    secondary = Color.White,
+    onSecondary = Color.Black,
+    background = Color.White,
+    onBackground = Color.Black,
+    surface = Color.White,
+    onSurface = Color.Black,
+    error = Color(0xFFD00036),
+    onError = Color.White
+)
+
 val bodyFontFamily = fontFamily(
     fonts = listOf(
         ResourceFont(R.font.domine_regular),
@@ -66,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme(typography = themeTypography) {
+            MaterialTheme(typography = themeTypography, colors = themeColors) {
                 MyApp()
             }
         }
@@ -194,10 +205,10 @@ fun PostCardSimple(post: Post) {
 //    }
 //}
 
-@Preview("Content Section")
+@Preview
 @Composable
 fun ContentPreview() {
-    MaterialTheme(typography = themeTypography) {
-        ContentSection(listOf(post1, post2, post3))
+    MaterialTheme(typography = themeTypography, colors = themeColors) {
+        MyApp()
     }
 }
