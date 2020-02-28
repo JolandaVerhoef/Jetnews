@@ -9,6 +9,7 @@ import androidx.ui.core.Clip
 import androidx.ui.core.Text
 import androidx.ui.core.setContent
 import androidx.ui.foundation.AdapterList
+import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.DrawImage
 import androidx.ui.foundation.shape.corner.RoundedCornerShape
 import androidx.ui.graphics.Color
@@ -28,10 +29,6 @@ import androidx.ui.unit.sp
 @Model
 object AppState {
     val bookmarks = ModelList<String>()
-
-    init {
-        bookmarks.add("2")
-    }
 }
 
 val appFontFamily = fontFamily(
@@ -95,7 +92,7 @@ fun MyApp() {
     Scaffold(
         topAppBar = {
             TopAppBar(
-                title = { Text("Jetnews")},
+                title = { Text("Jetnews (${AppState.bookmarks.size})")},
                 navigationIcon = {
                     DrawVector(vectorResource(R.drawable.ic_jetnews_logo))
                 })
@@ -201,22 +198,27 @@ fun PostCardSimple(post: Post) {
                 style = MaterialTheme.typography().body2
             )
         }
-        Container(width = 48.dp, height = 48.dp) {
-            DrawVector(vectorResource(
-                if(AppState.bookmarks.contains(post.id)) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
-            ))
+        Clickable(onClick = { bookmarkClicked(post.id) }) {
+            Container(width = 48.dp, height = 48.dp) {
+                DrawVector(
+                    vectorResource(
+                        if (AppState.bookmarks.contains(post.id)) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
+                    )
+                )
+            }
         }
     }
 }
 
-//@Preview("Post Card Simple")
-//@Composable
-//fun DefaultPreview() {
-//    MaterialTheme(typography = themeTypography) {
-//        PostCardSimple(post1)
-//    }
-//}
-
+private fun bookmarkClicked(postId: String) {
+    with(AppState) {
+        if (bookmarks.contains(postId)) {
+            bookmarks.remove(postId)
+        } else {
+            bookmarks.add(postId)
+        }
+    }
+}
 @Preview
 @Composable
 fun ContentPreview() {
